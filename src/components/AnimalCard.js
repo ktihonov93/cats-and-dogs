@@ -8,6 +8,10 @@ class AnimalCard extends Component {
         }
     }
 
+    handleFavoriteClick = () => {
+        this.setState({ isFavorite: !this.state.isFavorite })
+    }
+
     render(){
         const {animalInfo} = this.props;
         return (
@@ -17,8 +21,7 @@ class AnimalCard extends Component {
                 </div>
                 <div className="card-info">
                     <div>{animalInfo.name}</div>
-                    <div>♡</div> 
-                    {/* ♥️ */}
+                    <div onClick={this.handleFavoriteClick}>{this.state.isFavorite ? "♥️" : "♡"}</div>
                 </div>
             </div>
         )
