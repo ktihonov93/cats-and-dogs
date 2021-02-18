@@ -1,25 +1,43 @@
-import logo from './logo.svg';
+import { Component } from "react"
+import Dropdown from './components/Dropdown'
 import './App.css';
+import Title from './components/Title'
+import animals from './data'
+import AnimalsList from './components/AnimalsList'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  constructor (props){
+    super(props)
+    this.state = {
+      userSelection: 'All'
+    }
+  }
+
+  handleAnimalSelection = (event) => {
+    this.setState({userSelection: event.target.value})
+  }
+  
+  arrayChoice = () => {
+    const {userSelection} = this.state;
+    if (userSelection === "All"){
+      return animals
+    } else if (userSelection === "Cats") {
+      return animals.filter(animal => animal.type === 'cat')
+    } else {
+      return animals.filter(animal => animal.type === 'dog')
+    }
+  }
+
+  render(){    
+    return (
+      <div className="App">
+        <Title pageTitle="React Cats and Dogs"/>
+        <Dropdown handleSelect={this.handleAnimalSelection}/>
+        <AnimalsList animalsArray={this.arrayChoice()}/>
+      </div>
+    );
+  }
+  
 }
 
 export default App;
